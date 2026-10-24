@@ -4,164 +4,209 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sahla Hassan | SOC & DFIR</title>
-<meta name="description" content="Sahla Hassan — SOC Analyst & Digital Forensics Investigator. Portfolio of detection engineering and DFIR projects.">
+<meta name="description" content="Sahla Hassan — SOC Analyst & Digital Forensics Investigator. Wazuh detection engineering, MITRE ATT&CK, DFIR.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='32' fill='%230b1437'/><circle cx='32' cy='32' r='29' fill='none' stroke='%23e3c27a' stroke-width='3'/><text x='32' y='41' font-family='Arial' font-weight='700' font-size='24' fill='%23e3c27a' text-anchor='middle'>SH</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Reem+Kufi:wght@600;700&family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0f172a; --bg2:#141e33; --card:#16213a; --line:#243250;
-  --text:#e2e8f0; --muted:#94a3b8; --accent:#d6b98c; --accent2:#e8d5b5; --ok:#86efac;
-  --radius:14px;
+  --bg:#0b1437; --bg2:#0f1b47; --card:#13214f; --line:#24346b;
+  --gold:#e3c27a; --gold2:#c9a35a; --text:#e8ecf8; --muted:#9aa6c9;
+  --radius:14px; --max:1100px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans Arabic','IBM Plex Sans',system-ui,sans-serif;line-height:1.8;font-size:16px}
-html[lang="en"] body{font-family:'IBM Plex Sans','IBM Plex Sans Arabic',system-ui,sans-serif}
-html[lang="ar"] .en, html[lang="en"] .ar{display:none !important}
-a{color:var(--accent);text-decoration:none}
-.wrap{max-width:900px;margin:0 auto;padding:0 16px}
-.mono{font-family:'JetBrains Mono',monospace}
+body{background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic","Inter",sans-serif;line-height:1.8;overflow-x:hidden}
+html[lang="en"] body{font-family:"Inter","IBM Plex Sans Arabic",sans-serif;line-height:1.7}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.mono{font-family:"JetBrains Mono",monospace}
+.wrap{max-width:var(--max);margin:auto;padding:0 20px}
+
+/* particles */
+#dots{position:fixed;inset:0;z-index:0;pointer-events:none}
+main,header,footer,.social{position:relative;z-index:1}
 
 /* nav */
-nav{position:sticky;top:0;z-index:10;background:rgba(15,23,42,.88);backdrop-filter:blur(10px)}
-nav .wrap{max-width:1100px;display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
-.logo{display:flex;align-items:center;gap:10px;color:var(--text);font-weight:700}
-.mono-badge{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--accent);display:grid;place-items:center;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:14px}
-.links{display:flex;gap:22px;font-size:14px}
-.links a{color:var(--text)} .links a i{font-style:normal;color:var(--accent);font-family:'JetBrains Mono',monospace;margin-inline-end:4px;font-size:12px}
-.links a:hover{color:var(--accent)}
-.lang{border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:6px;padding:6px 14px;cursor:pointer;font-family:inherit;font-size:13px}
-.lang:hover{background:rgba(214,185,140,.1)}
-@media(max-width:760px){.links{display:none}}
+header{position:sticky;top:0;z-index:20;background:rgba(11,20,55,.85);backdrop-filter:blur(10px);border-bottom:1px solid transparent;transition:.3s}
+header.scrolled{border-bottom-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700}
+.logo{width:42px;height:42px;border-radius:50%;border:2px solid var(--gold);display:grid;place-items:center;color:var(--gold);font-family:"Inter";font-weight:700;font-size:15px}
+.links{display:flex;gap:26px;font-size:15px}
+.links a{color:var(--text);opacity:.85;transition:.2s}
+.links a:hover{color:var(--gold);opacity:1}
+.links .num{color:var(--gold);font-size:12px;margin-inline-end:4px}
+.btn-lang{border:1px solid var(--gold);color:var(--gold);background:none;border-radius:8px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer}
+.btn-lang:hover{background:rgba(227,194,122,.1)}
+.burger{display:none;background:none;border:0;color:var(--gold);font-size:26px;cursor:pointer}
 
-/* side social bar */
-.side{position:fixed;bottom:0;inset-inline-start:28px;display:flex;flex-direction:column;align-items:center;gap:18px;z-index:5}
-.side::after{content:"";width:1px;height:90px;background:var(--muted)}
-.side a{color:var(--muted);transition:.2s;display:flex}
-.side a:hover{color:var(--accent);transform:translateY(-3px)}
-.side svg{width:20px;height:20px}
-@media(max-width:1000px){.side{display:none}}
-.socials-inline{display:none;gap:18px;margin-top:28px}
-.socials-inline a{color:var(--muted)} .socials-inline svg{width:22px;height:22px}
-@media(max-width:1000px){.socials-inline{display:flex}}
+/* social sidebar */
+.social{position:fixed;bottom:0;inset-inline-start:28px;display:flex;flex-direction:column;align-items:center;gap:18px;z-index:5}
+.social a{color:var(--muted);transition:.2s}
+.social a:hover{color:var(--gold);transform:translateY(-3px)}
+.social svg{width:20px;height:20px}
+.social::after{content:"";width:1px;height:90px;background:var(--muted)}
 
 /* hero */
-.hero{min-height:calc(100vh - 68px);display:flex;align-items:center;padding:40px 0 60px}
-.hello{font-family:'JetBrains Mono',monospace;}
-.hello .ar{font-family:'IBM Plex Sans Arabic',sans-serif}
-.hello{color:var(--text);font-size:16px;margin-bottom:6px}
-.hero h1{font-size:clamp(42px,8vw,72px);line-height:1.1;color:var(--accent);margin-bottom:10px;font-weight:700}
-.hero h2{font-size:clamp(20px,3.5vw,30px);color:var(--muted);font-weight:500;margin-bottom:22px}
-.hero p{color:var(--muted);font-size:17px;max-width:560px;margin-bottom:12px}
-.hero p strong{color:var(--text)}
-.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:6px;font-size:15px;border:1px solid var(--text);color:var(--text);background:transparent;transition:.2s}
-.btn:hover{background:rgba(255,255,255,.06);transform:translateY(-2px)}
-.btn.primary{border-color:var(--accent);color:var(--accent)}
-.btn.primary:hover{background:rgba(214,185,140,.1)}
+.hero{min-height:calc(100vh - 72px);display:flex;align-items:center}
+.hero .hi{color:var(--gold);font-size:16px;margin-bottom:8px}
+.hero h1{font-family:"Reem Kufi","Inter",sans-serif;color:var(--gold);font-size:clamp(46px,8vw,84px);line-height:1.15}
+html[lang="en"] .hero h1{font-family:"Inter";font-weight:700;letter-spacing:-1px}
+.hero h2{font-size:clamp(22px,3.2vw,32px);font-weight:500;margin:6px 0 18px}
+.hero p{max-width:560px;color:var(--muted);font-size:17px}
+.hero p b{color:var(--text)}
+.cta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+.btn{border:1px solid var(--gold);color:var(--gold);padding:12px 26px;border-radius:8px;font-weight:500;transition:.2s;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{background:rgba(227,194,122,.1);transform:translateY(-2px)}
+.btn.solid{background:var(--gold);color:var(--bg)}
+.btn.solid:hover{background:var(--gold2)}
 
 /* sections */
-section{padding:80px 0}
-.sec-title{display:flex;align-items:center;gap:12px;font-size:26px;margin-bottom:34px;white-space:nowrap}
-.sec-title i{font-style:normal;font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:18px}
-.sec-title::after{content:"";height:1px;background:var(--line);flex:1;max-width:280px}
-.about p{color:var(--muted);font-size:17px;margin-bottom:14px;max-width:720px}
-.about p strong{color:var(--accent2);font-weight:500}
-.pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.pill{font-size:13px;padding:5px 12px;border-radius:6px;background:var(--bg2);border:1px solid var(--line);color:var(--text)}
+section{padding:90px 0}
+.title{display:flex;align-items:center;gap:14px;font-size:28px;font-weight:700;margin-bottom:40px}
+.title .num{color:var(--gold);font-size:18px}
+.title::after{content:"";flex:1;max-width:280px;height:1px;background:var(--line)}
+.reveal{opacity:0;transform:translateY(24px);transition:.7s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* about */
+.about{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:start}
+.about p{color:var(--muted);margin-bottom:14px;font-size:16.5px}
+.about p b{color:var(--gold);font-weight:500}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;text-align:center}
+.stat .n{font-family:"Inter";font-size:30px;font-weight:700;color:var(--gold)}
+.stat .l{color:var(--muted);font-size:14px}
 
 /* projects */
-.project{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;margin-bottom:24px;transition:.25s}
-.project:hover{transform:translateY(-4px);border-color:rgba(214,185,140,.4)}
-.p-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
-.p-icon{font-size:28px;line-height:1;background:var(--bg2);border:1px solid var(--line);border-radius:12px;width:54px;height:54px;display:grid;place-items:center;flex-shrink:0}
-.p-head h3{font-size:22px;line-height:1.3;color:var(--text)}
-.p-head small{color:var(--muted);font-size:13px;font-family:'JetBrains Mono',monospace}
-.badge{display:inline-block;font-size:12px;padding:1px 10px;border-radius:999px;border:1px solid var(--accent);color:var(--accent);margin-top:6px}
-.oneline{border-inline-start:3px solid var(--accent);padding:6px 14px;font-size:16px;margin-bottom:18px;color:var(--text);background:rgba(214,185,140,.05);border-radius:4px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
-@media(max-width:700px){.grid2{grid-template-columns:1fr}}
-.block h4{font-size:14px;color:var(--accent);margin-bottom:4px;font-weight:600}
-.block p{color:var(--muted);font-size:15px}
-.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0 18px}
-.flow span.step{font-size:13px;padding:5px 12px;border-radius:6px;background:var(--bg2);border:1px solid var(--line)}
-.flow span.arr{color:var(--accent);font-family:'JetBrains Mono',monospace}
-.challenge{border:1px dashed rgba(214,185,140,.45);border-radius:10px;padding:14px 16px;margin-bottom:18px}
-.challenge h4{color:var(--accent2);font-size:14px;margin-bottom:4px}
-.challenge p{color:var(--muted);font-size:15px}
-.tools{display:flex;flex-wrap:wrap;gap:14px}
-.tools span{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted)}
-.p-links{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap}
-.p-links a{font-size:14px;color:var(--muted)}
-.p-links a.soon{opacity:.6;pointer-events:none}
+.projects{display:grid;gap:34px}
+.proj{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:grid;grid-template-columns:1.05fr 1fr;transition:.3s}
+.proj:hover{border-color:var(--gold2);transform:translateY(-4px)}
+.shots{position:relative;background:#0a1230;min-height:280px}
+.shots img{width:100%;height:100%;object-fit:contain;position:absolute;inset:0;padding:10px;opacity:0;transition:opacity .5s}
+.shots img.on{opacity:1}
+.ph{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:14px;text-align:center;padding:20px;background:repeating-linear-gradient(45deg,#0a1230 0 12px,#0d173b 12px 24px)}
+.ph .ic{font-size:40px}
+.shots.empty .ph{display:flex}
+.dotsnav{position:absolute;bottom:12px;inset-inline:0;display:flex;justify-content:center;gap:8px;z-index:2}
+.dotsnav button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.35);cursor:pointer}
+.dotsnav button.on{background:var(--gold)}
+.pbody{padding:28px}
+.ptag{color:var(--gold);font-size:13px;margin-bottom:4px}
+.proj h3{font-size:23px;margin-bottom:10px}
+.proj p{color:var(--muted);font-size:15.5px;margin-bottom:14px}
+.proj ul{list-style:none;margin-bottom:16px}
+.proj li{color:var(--muted);font-size:14.5px;padding-inline-start:18px;position:relative;margin-bottom:4px}
+.proj li::before{content:"▹";color:var(--gold);position:absolute;inset-inline-start:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.chip{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--gold);background:rgba(227,194,122,.08);border:1px solid rgba(227,194,122,.25);padding:3px 10px;border-radius:20px}
+.plinks{display:flex;gap:12px;flex-wrap:wrap}
+.plinks .btn{padding:9px 18px;font-size:14px}
+.plinks svg{width:17px;height:17px}
 
-/* skills & certs */
-.skills,.certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
-.skill,.cert{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
-.skill h4{font-size:15px;margin-bottom:10px;color:var(--accent2)}
-.skill .pill-row{margin-top:0}
-.cert{display:flex;gap:14px;align-items:flex-start}
-.cert .ic{font-size:26px}
-.cert h4{font-size:17px;color:var(--accent)}
-.cert small{color:var(--muted);display:block}
-.cert em{font-style:normal;font-size:13px;color:var(--text)}
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.sk{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;transition:.3s}
+.sk:hover{border-color:var(--gold2)}
+.sk h4{color:var(--gold);font-size:16px;margin-bottom:12px;display:flex;gap:8px;align-items:center}
+
+/* certs */
+.certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.cert{background:linear-gradient(135deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:var(--radius);padding:26px;display:flex;gap:18px;align-items:center}
+.badge{flex:none;width:64px;height:64px;border-radius:50%;border:2px solid var(--gold);display:grid;place-items:center;color:var(--gold);font-size:26px}
+.cert h4{font-size:18px}
+.cert .org{color:var(--muted);font-size:14px}
+.cert .yr{color:var(--gold);font-size:13px}
 
 /* contact */
-#contact{text-align:center}
-#contact .sec-title{justify-content:center}
-#contact .sec-title::after{display:none}
-.c-lead{color:var(--muted);max-width:520px;margin:0 auto 28px;font-size:17px}
-.contact{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
-.c-item{border:1px solid var(--line);border-radius:8px;padding:12px 18px;display:flex;gap:10px;align-items:center;color:var(--text);transition:.2s;font-size:14px}
-a.c-item:hover{border-color:var(--accent);color:var(--accent)}
-footer{text-align:center;color:var(--muted);font-size:13px;padding:28px 0 40px;font-family:'JetBrains Mono',monospace}
+.contact{text-align:center;max-width:620px;margin:auto}
+.contact .title{justify-content:center}
+.contact .title::after{display:none}
+.contact p{color:var(--muted);margin-bottom:28px;font-size:17px}
+.clinks{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:26px}
+.clinks a{color:var(--muted);font-size:14px;display:flex;align-items:center;gap:6px}
+.clinks a:hover{color:var(--gold)}
+.clinks svg{width:17px;height:17px}
+
+footer{text-align:center;color:var(--muted);font-size:13px;padding:30px 0 40px}
+
+/* responsive */
+@media(max-width:860px){
+  .links{position:fixed;top:72px;inset-inline:0;background:var(--bg2);flex-direction:column;gap:0;border-bottom:1px solid var(--line);display:none}
+  .links.open{display:flex}
+  .links a{padding:14px 20px;border-top:1px solid var(--line)}
+  .burger{display:block}
+  .social{display:none}
+  .about,.proj{grid-template-columns:1fr}
+  .shots{min-height:220px}
+  section{padding:70px 0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 </style>
 </head>
 <body>
+<canvas id="dots"></canvas>
 
-<nav>
-  <div class="wrap">
-    <a class="logo" href="#"><span class="mono-badge">SH</span><span class="ar">سهلة حسن</span><span class="en">Sahla Hassan</span></a>
-    <div class="links">
-      <a href="#about"><i>01.</i><span class="ar">عني</span><span class="en">About</span></a>
-      <a href="#projects"><i>02.</i><span class="ar">المشاريع</span><span class="en">Projects</span></a>
-      <a href="#skills"><i>03.</i><span class="ar">المهارات</span><span class="en">Skills</span></a>
-      <a href="#certs"><i>04.</i><span class="ar">الشهادات</span><span class="en">Certs</span></a>
-      <a href="#contact"><i>05.</i><span class="ar">تواصل</span><span class="en">Contact</span></a>
+<header id="top">
+  <div class="wrap nav">
+    <a href="#" class="brand"><span class="logo">SH</span><span data-ar="سهلة حسن" data-en="Sahla Hassan">سهلة حسن</span></a>
+    <nav class="links" id="links">
+      <a href="#about"><span class="num mono">01.</span><span data-ar="عني" data-en="About">عني</span></a>
+      <a href="#projects"><span class="num mono">02.</span><span data-ar="المشاريع" data-en="Projects">المشاريع</span></a>
+      <a href="#skills"><span class="num mono">03.</span><span data-ar="المهارات" data-en="Skills">المهارات</span></a>
+      <a href="#certs"><span class="num mono">04.</span><span data-ar="الشهادات" data-en="Certifications">الشهادات</span></a>
+      <a href="#contact"><span class="num mono">05.</span><span data-ar="تواصل" data-en="Contact">تواصل</span></a>
+    </nav>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn-lang" id="langBtn">English</button>
+      <button class="burger" id="burger" aria-label="Menu">☰</button>
     </div>
-    <button class="lang" id="langBtn" type="button"><span class="ar">English</span><span class="en">عربي</span></button>
-  </div>
-</nav>
-
-<!-- HERO -->
-<div class="side"><a href="mailto:hsahla788@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a><a href="https://www.linkedin.com/in/sahla-hassan" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg></a><a href="https://github.com/sahla-hassan" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-4 1.5-4-2-6-2.5m12 5v-3.5a3 3 0 0 0-.9-2.4c3-.3 6-1.5 6-6.5a5 5 0 0 0-1.4-3.5 4.6 4.6 0 0 0-.1-3.5s-1.1-.3-3.6 1.4a12.4 12.4 0 0 0-6.5 0C6 1.8 4.9 2.1 4.9 2.1a4.6 4.6 0 0 0-.1 3.5A5 5 0 0 0 3.4 9.1c0 5 3 6.2 6 6.5a3 3 0 0 0-.9 2.4V21.5"/></svg></a></div>
-<header class="hero">
-  <div class="wrap">
-    <div class="hello"><span class="ar">مرحباً! أنا</span><span class="en">Hello! My name is</span></div>
-    <h1><span class="ar">سهلة حسن</span><span class="en">Sahla Hassan</span></h1>
-    <h2><span class="ar">محللة SOC ومحققة جنائية رقمية</span><span class="en">SOC Analyst & Digital Forensics Investigator</span></h2>
-    <p class="ar">أكشف الهجمات قبل ما تكبر، وأتتبع الأدلة لين أوصل للحقيقة. حاصلة على شهادة <strong>eCDFP</strong>، وخريجة <strong>معسكر طويق للتحقيق الجنائي الرقمي</strong> بتقدير <strong>A+</strong>، وكتبت <strong>20 قاعدة كشف</strong> مربوطة بـ MITRE ATT&CK.</p>
-    <p class="en">I detect attacks before they escalate, and follow the evidence to the truth. <strong>eCDFP</strong>-certified, <strong>A+</strong> graduate of Tuwaiq Academy's Digital Forensics bootcamp, with <strong>20 custom detection rules</strong> mapped to MITRE ATT&CK.</p>
-    <div class="btns">
-      <a class="btn primary" href="#projects"><span class="ar">استكشف أعمالي ↓</span><span class="en">Explore my work ↓</span></a>
-      <a class="btn" href="Sahla_Hassan_CV.pdf" target="_blank" rel="noopener"><span class="ar">السيرة الذاتية</span><span class="en">Resume</span></a>
-    </div>
-    <div class="socials-inline"><a href="mailto:hsahla788@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a><a href="https://www.linkedin.com/in/sahla-hassan" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg></a><a href="https://github.com/sahla-hassan" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-4 1.5-4-2-6-2.5m12 5v-3.5a3 3 0 0 0-.9-2.4c3-.3 6-1.5 6-6.5a5 5 0 0 0-1.4-3.5 4.6 4.6 0 0 0-.1-3.5s-1.1-.3-3.6 1.4a12.4 12.4 0 0 0-6.5 0C6 1.8 4.9 2.1 4.9 2.1a4.6 4.6 0 0 0-.1 3.5A5 5 0 0 0 3.4 9.1c0 5 3 6.2 6 6.5a3 3 0 0 0-.9 2.4V21.5"/></svg></a></div>
   </div>
 </header>
 
-<!-- ABOUT -->
-<section id="about" class="about">
+<div class="social">
+  <a href="mailto:hsahla788@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></a>
+  <a href="https://linkedin.com/in/sahla-hassan" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.5h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1v5.45h-4v-4.83c0-1.15-.02-2.63-1.6-2.63-1.6 0-1.85 1.25-1.85 2.55v4.91h-4z"/></svg></a>
+  <a href="https://github.com/sahla-hassan" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></a>
+</div>
+
+<main>
+<!-- HERO -->
+<section class="hero">
   <div class="wrap">
-    <h2 class="sec-title"><i>01.</i><span class="ar">عني</span><span class="en">About Me</span></h2>
-    <p class="ar">أحب <strong>الكشف والتتبع</strong>: ألاحق الدليل خطوة بخطوة لين أوصل للحقيقة، وهذا اللي شدني للأمن السيبراني.</p>
-    <p class="ar">خريجة نظم معلومات من <strong>جامعة أم القرى</strong>. تدربت مع <strong>فريق الأمن السيبراني في أمانة العاصمة المقدسة</strong> على تقييم الضوابط الأساسية للأمن السيبراني (NCA ECC)، وبعدها أنهيت <strong>معسكر الجرائم السيبرانية والتحقيق الجنائي الرقمي المتقدم</strong> في <strong>أكاديمية طويق</strong> بتقدير <strong>100% (A+)</strong>، وطبقت فيه عملياً: بناء أنظمة كشف، والاستجابة للحوادث، والتحقيق في الأدلة الرقمية.</p>
-    <p class="en">I love the hunt: following evidence <strong>step by step</strong> until the truth is clear. That's what drew me to cybersecurity.</p>
-    <p class="en">Information Systems graduate from <strong>Umm Al-Qura University</strong>. Interned with <strong>Holy Makkah Municipality's cybersecurity team</strong>, assessing controls against the <strong>NCA ECC</strong>. Completed <strong>Tuwaiq Academy's Advanced Cybercrime & Digital Forensic Investigation Bootcamp</strong> with a <strong>100% (A+)</strong>, with hands-on detection, incident response and digital evidence investigation.</p>
-    <div class="pill-row">
-      <span class="pill">🧠 <span class="ar">التفكير التحليلي</span><span class="en">Analytical thinking</span></span>
-      <span class="pill">🤝 <span class="ar">العمل الجماعي</span><span class="en">Teamwork</span></span>
+    <div class="hi mono" data-ar="مرحباً! أنا" data-en="Hi, my name is">مرحباً! أنا</div>
+    <h1 data-ar="سهلة حسن" data-en="Sahla Hassan">سهلة حسن</h1>
+    <h2 data-ar="محللة SOC ومحققة جنائية رقمية" data-en="SOC Analyst & Digital Forensics Investigator">محللة SOC ومحققة جنائية رقمية</h2>
+    <p data-ar="أكشف الهجمات قبل ما تكبر، وأتتبع الأدلة لين أوصل للحقيقة. حاصلة على شهادة <b>eCDFP</b>، وخريجة <b>معسكر طويق للتحقيق الجنائي الرقمي</b> بتقدير <b>A+</b>، وكتبت <b>20 قاعدة كشف</b> مربوطة بـ MITRE ATT&amp;CK."
+       data-en="I catch attacks early and follow the evidence to the truth. <b>eCDFP</b> certified, graduate of <b>Tuwaiq Academy's Digital Forensics Bootcamp</b> with an <b>A+</b>, and author of <b>20 detection rules</b> mapped to MITRE ATT&amp;CK.">أكشف الهجمات قبل ما تكبر، وأتتبع الأدلة لين أوصل للحقيقة.</p>
+    <div class="cta">
+      <a href="#projects" class="btn solid" data-ar="استكشف أعمالي ↓" data-en="View my work ↓">استكشف أعمالي ↓</a>
+      <a href="Sahla_Hassan_CV.pdf" target="_blank" class="btn" data-ar="السيرة الذاتية" data-en="Resume">السيرة الذاتية</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <h2 class="title reveal"><span class="num mono">01.</span><span data-ar="عني" data-en="About Me">عني</span></h2>
+    <div class="about reveal">
+      <div>
+        <p data-ar="خريجة <b>نظم المعلومات</b> من جامعة أم القرى، وخريجة <b>معسكر الجرائم السيبرانية والتحقيق الجنائي الرقمي المتقدم</b> في أكاديمية طويق بتقدير A+."
+           data-en="<b>Information Systems</b> graduate from Umm Al-Qura University, and graduate of Tuwaiq Academy's <b>Advanced Cybercrime &amp; Digital Forensic Investigation Bootcamp</b> with an A+.">.</p>
+        <p data-ar="تدرّبت مع فريق الأمن السيبراني في <b>أمانة العاصمة المقدسة</b>، وقيّمت الضوابط مقابل الضوابط الأساسية للأمن السيبراني (NCA ECC)."
+           data-en="Interned with the cybersecurity team at <b>Holy Makkah Municipality</b>, assessing controls against the NCA Essential Cybersecurity Controls (ECC).">.</p>
+        <p data-ar="أشتغل على جهتين: <b>الكشف</b> — أكتب قواعد مربوطة بـ MITRE ATT&amp;CK على Wazuh، و<b>التحقيق</b> — أجمع الدليل وأتحقق من سلامته وأبني الخط الزمني للحادثة."
+           data-en="I work on both sides: <b>detection</b> — writing MITRE ATT&amp;CK-mapped rules in Wazuh — and <b>investigation</b> — acquiring evidence, verifying its integrity and rebuilding the incident timeline.">.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="n" dir="ltr">20</div><div class="l" data-ar="قاعدة كشف" data-en="Detection rules">قاعدة كشف</div></div>
+        <div class="stat"><div class="n" dir="ltr">A+</div><div class="l" data-ar="تقدير المعسكر" data-en="Bootcamp grade">تقدير المعسكر</div></div>
+        <div class="stat"><div class="n" dir="ltr">3</div><div class="l" data-ar="مشاريع رئيسية" data-en="Core projects">مشاريع رئيسية</div></div>
+        <div class="stat"><div class="n" dir="ltr">2</div><div class="l" data-ar="شهادات مهنية" data-en="Certifications">شهادات مهنية</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -169,128 +214,90 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:28px 0 40px;f
 <!-- PROJECTS -->
 <section id="projects">
   <div class="wrap">
-    <h2 class="sec-title"><i>02.</i><span class="ar">المشاريع</span><span class="en">Projects</span></h2>
+    <h2 class="title reveal"><span class="num mono">02.</span><span data-ar="المشاريع" data-en="Projects">المشاريع</span></h2>
+    <div class="projects">
 
-    <!-- 1 Wazuh -->
-    <article class="project" style="--c:#22d3ee">
-      <div class="p-head">
-        <div class="p-icon">🛡️</div>
-        <div>
-          <h3><span class="ar">مختبر مراقبة أمنية بـ Wazuh</span><span class="en">Wazuh SOC Detection Lab</span></h3>
-          <small>Wazuh SOC Lab · 2026</small><br>
-          <span class="badge"><span class="ar">مشروع فردي</span><span class="en">Solo project</span></span>
+      <!-- Wazuh -->
+      <article class="proj reveal">
+        <div class="shots" data-imgs="wazuh-1.png,wazuh-2.png,wazuh-3.png">
+          <div class="ph"><span class="ic">🛡️</span><span data-ar="صور المشروع قريباً" data-en="Screenshots coming soon">صور المشروع قريباً</span></div>
         </div>
-      </div>
-      <div class="oneline">
-        <b>💡</b>
-        <span class="ar">بنيت نظام يكشف الهجمات الإلكترونية لحظة حدوثها، وينبّه المحلل، ويوقف المهاجم تلقائياً.</span>
-        <span class="en">A system that detects cyberattacks in real time, alerts the analyst, and blocks the attacker automatically.</span>
-      </div>
-      <div class="flow">
-        <span class="step"><span class="ar">هجمة</span><span class="en">Attack</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">سجل</span><span class="en">Log</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">قاعدة كشف</span><span class="en">Detection Rule</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">تنبيه</span><span class="en">Alert</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">حظر تلقائي</span><span class="en">Auto-Block</span></span>
-      </div>
-      <div class="grid2">
-        <div class="block"><h4><span class="ar">❓ المشكلة</span><span class="en">❓ The Problem</span></h4>
-          <p><span class="ar">الأنظمة الجاهزة تفوّت هجمات حقيقية، أو تطلع تنبيهات كثيرة بدون فايدة.</span><span class="en">Default rules miss real attacks or create too much noise.</span></p></div>
-        <div class="block"><h4><span class="ar">👩‍💻 دوري</span><span class="en">👩‍💻 My Role</span></h4>
-          <p><span class="ar">بنيت بيئة من 3 أجهزة (مستخدم، مهاجم، خادم)، وكتبت 20 قاعدة كشف مربوطة بـ MITRE ATT&CK، وجربت كل هجمة بنفسي.</span><span class="en">Built a 3-node lab (endpoint, attacker, server), wrote 20 rules mapped to MITRE ATT&CK, and tested every attack myself.</span></p></div>
-        <div class="block"><h4><span class="ar">🎯 وش يكشف</span><span class="en">🎯 What it detects</span></h4>
-          <p><span class="ar">تخمين كلمات المرور · PowerShell مخفي · حقن SQL · تحرك المهاجم بين الأجهزة · مسح السجلات · تسريب البيانات · عناوين IP خبيثة</span><span class="en">Brute force · Obfuscated PowerShell · SQL injection · Lateral movement · Log clearing · Data exfiltration · Malicious IPs</span></p></div>
-        <div class="block"><h4><span class="ar">🪤 فخ Honeytoken</span><span class="en">🪤 Honeytoken Trap</span></h4>
-          <p><span class="ar">ملف وهمي ما يحتاجه أحد في الشغل الطبيعي، فأي أحد يتعامل معه يعتبر مشبوه ويطلع تنبيه فوري.</span><span class="en">A decoy file no legitimate user needs. Anyone touching it triggers an instant alert.</span></p></div>
-      </div>
-      <div class="challenge"><h4><span class="ar">🧩 تحدي واجهته</span><span class="en">🧩 A Challenge I Solved</span></h4>
-        <p><span class="ar">قواعد Windows ما كانت تشتغل أبداً. تتبعت السبب واكتشفت إن الحقل اللي أستخدمه للفلترة ثابت دائماً، فغيرته للحقل الصحيح واشتغلت القواعد.</span><span class="en">Windows rules never fired. I traced the cause to the wrong filter field, switched it, and they worked.</span></p></div>
-      <div class="tools"><span>Wazuh</span><span>Sysmon</span><span>MITRE ATT&CK</span><span>VirusTotal</span><span>FIM</span><span>Active Response</span></div>
-      <div class="p-links"><a class="soon" href="#">💻 GitHub <span class="ar">(قريباً)</span><span class="en">(soon)</span></a></div>
-    </article>
+        <div class="pbody">
+          <div class="ptag mono" data-ar="2026 · مشروع فردي" data-en="2026 · Solo">2026 · مشروع فردي</div>
+          <h3>Wazuh SOC Detection Lab</h3>
+          <p data-ar="مختبر SOC من 3 أجهزة يحاكي سلسلة هجوم كاملة، ويكشف كل مرحلة بقواعد مخصّصة مربوطة بـ MITRE ATT&amp;CK."
+             data-en="A 3-node SOC lab simulating a full attack chain, detecting every stage with custom rules mapped to MITRE ATT&amp;CK.">.</p>
+          <ul>
+            <li data-ar="20 قاعدة كشف: Brute Force، تشويش PowerShell، SQL Injection، الحركة الجانبية، مسح السجلات، تسريب البيانات" data-en="20 rules: brute force, PowerShell obfuscation, SQL injection, lateral movement, log clearing, exfiltration">.</li>
+            <li data-ar="ملف طُعم (Honeytoken) يطلق تنبيه عالي الخطورة عند لمسه" data-en="Honeytoken decoy that fires a high-severity alert on access">.</li>
+            <li data-ar="حظر تلقائي لعنوان المهاجم (Active Response)" data-en="Automatic attacker blocking via Active Response">.</li>
+          </ul>
+          <div class="chips"><span class="chip">Wazuh</span><span class="chip">Sysmon</span><span class="chip">MITRE ATT&amp;CK</span><span class="chip">Active Response</span></div>
+          <div class="plinks">
+            <a class="btn" href="https://github.com/sahla-hassan/wazuh-soc-lab" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg><span data-ar="الكود على GitHub" data-en="View on GitHub">الكود على GitHub</span></a>
+          </div>
+        </div>
+      </article>
 
-    <!-- 2 SKY EVIDENCE -->
-    <article class="project" style="--c:#a78bfa">
-      <div class="p-head">
-        <div class="p-icon">🚁</div>
-        <div>
+      <!-- SKY EVIDENCE -->
+      <article class="proj reveal">
+        <div class="shots" data-imgs="sky-1.png,sky-2.png,sky-3.png">
+          <div class="ph"><span class="ic">🛸</span><span data-ar="صور المشروع قريباً" data-en="Screenshots coming soon">صور المشروع قريباً</span></div>
+        </div>
+        <div class="pbody">
+          <div class="ptag mono" data-ar="2026 · مشروع التخرج · فردي" data-en="2026 · Graduation project · Solo">2026 · مشروع التخرج · فردي</div>
           <h3>SKY EVIDENCE</h3>
-          <small><span class="ar">منصة تحقيق جنائي رقمي للدرونات</span><span class="en">Drone Forensics Platform</span> · 2026</small><br>
-          <span class="badge"><span class="ar">مشروع فردي</span><span class="en">Solo project</span></span>
+          <p data-ar="منصة تحقيق جنائي رقمي للطائرات بدون طيار، مكتوبة بـ Python، من استحواذ الدليل لين التقرير النهائي."
+             data-en="A drone (UAV) digital forensics platform in Python — from evidence acquisition to the final report.">.</p>
+          <ul>
+            <li data-ar="التحقق من سلامة الدليل بالـ Hash وتحليل سجلات الطيران" data-en="Hash-based integrity verification and flight-log analysis">.</li>
+            <li data-ar="رسم مسار GPS ثلاثي الأبعاد وإعادة بناء الخط الزمني" data-en="3D GPS path mapping and timeline reconstruction">.</li>
+            <li data-ar="اختُبرت على قضية تدريبية فيها تزييف GPS وسلسلة Hash مكسورة" data-en="Tested on a practice case with planted GPS spoofing and a broken hash chain">.</li>
+          </ul>
+          <div class="chips"><span class="chip">Python</span><span class="chip">Kali Linux</span><span class="chip">DFIR</span><span class="chip">GPS</span></div>
+          <div class="plinks">
+            <a class="btn" href="https://github.com/sahla-hassan/sky-evidence" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg><span data-ar="الكود على GitHub" data-en="View on GitHub">الكود على GitHub</span></a>
+          </div>
         </div>
-      </div>
-      <div class="oneline">
-        <b>💡</b>
-        <span class="ar">أداة تساعد المحقق يحلل بيانات الدرون ويعرف وين طار، ومتى، وهل البيانات تم التلاعب فيها.</span>
-        <span class="en">A tool that helps investigators analyze drone data: where it flew, when, and whether evidence was tampered with.</span>
-      </div>
-      <div class="flow">
-        <span class="step"><span class="ar">جمع الدليل</span><span class="en">Acquire</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">تحقق Hash</span><span class="en">Verify Hash</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">سجل الطيران</span><span class="en">Flight Log</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">خريطة GPS 3D</span><span class="en">3D GPS Map</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">خط زمني</span><span class="en">Timeline</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">تقرير</span><span class="en">Report</span></span>
-      </div>
-      <div class="grid2">
-        <div class="block"><h4><span class="ar">❓ المشكلة</span><span class="en">❓ The Problem</span></h4>
-          <p><span class="ar">الدرونات صارت تُستخدم في جرائم، لكن أدوات التحقيق فيها قليلة ومعقدة.</span><span class="en">Drones are increasingly used in crimes, but investigation tools are scarce and complex.</span></p></div>
-        <div class="block"><h4><span class="ar">🎯 قضية تجريبية</span><span class="en">🎯 Test Case</span></h4>
-          <p><span class="ar">صممت قضية (CASE-2026-DR07) فيها أدلة متلاعب فيها عمداً، زي تزييف GPS وكسر سلسلة الـ Hash، والأداة تكشفها.</span><span class="en">A practice case with planted tampering (GPS spoofing, broken hash chain) that the tool detects.</span></p></div>
-      </div>
-      <div class="challenge"><h4><span class="ar">🧩 تحدي واجهته</span><span class="en">🧩 A Challenge I Solved</span></h4>
-        <p><span class="ar">ما فيه بيانات درون حقيقية متاحة للتجربة، فصممت قضية تدريبية كاملة بأدلة متلاعب فيها عمداً عشان أختبر إن الأداة تكشفها.</span><span class="en">No real drone data was available, so I built a full practice case with planted tampering to test detection.</span></p></div>
-      <div class="tools"><span>Python</span><span>Kali Linux</span><span>CLI</span><span>Hashing</span><span>Timeline Analysis</span></div>
-      <div class="p-links"><a class="soon" href="#">💻 GitHub <span class="ar">(قريباً)</span><span class="en">(soon)</span></a></div>
-    </article>
+      </article>
 
-    <!-- 3 Rasd -->
-    <article class="project" style="--c:#34d399">
-      <div class="p-head">
-        <div class="p-icon">📡</div>
-        <div>
-          <h3><span class="ar">رَصد</span><span class="en">Rasd</span></h3>
-          <small><span class="ar">منصة تحقيق في بيانات الاتصالات</span><span class="en">Telecom Investigation Platform</span> · 2026</small><br>
-          <span class="badge"><span class="ar">فريق من 3</span><span class="en">Team of 3</span></span>
+      <!-- Rasd -->
+      <article class="proj reveal">
+        <div class="shots" data-imgs="rasd-1.png,rasd-2.png,rasd-3.png">
+          <div class="ph"><span class="ic">📡</span><span data-ar="صور المشروع قريباً" data-en="Screenshots coming soon">صور المشروع قريباً</span></div>
         </div>
-      </div>
-      <div class="oneline">
-        <b>💡</b>
-        <span class="ar">منصة تحلل سجلات المكالمات وتربط بين الأشخاص والأجهزة والأحداث، عشان المحقق يوصل للدليل أسرع.</span>
-        <span class="en">A platform that analyzes call records and links people, devices and events so investigators reach evidence faster.</span>
-      </div>
-      <div class="flow">
-        <span class="step"><span class="ar">سجلات المكالمات</span><span class="en">CDR</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">تحقق Hash</span><span class="en">Hash Verify</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">تحليل العلاقات</span><span class="en">Link Analysis</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">خط زمني وخريطة أدلة</span><span class="en">Timeline & Evidence Map</span></span><span class="arr ar">←</span><span class="arr en">→</span>
-        <span class="step"><span class="ar">تقرير التحقيق</span><span class="en">Report</span></span>
-      </div>
-      <div class="grid2">
-        <div class="block"><h4><span class="ar">❓ المشكلة</span><span class="en">❓ The Problem</span></h4>
-          <p><span class="ar">سجلات المكالمات ضخمة جداً، وربطها يدوياً يأخذ وقت طويل وسهل يفوت فيه دليل.</span><span class="en">Call records are huge, and linking them manually is slow and error-prone.</span></p></div>
-        <div class="block"><h4><span class="ar">👩‍💻 دوري</span><span class="en">👩‍💻 My Role</span></h4>
-          <p><span class="ar">قدت الجانب الجنائي والأمني والتقارير: جمع الأدلة · Hash · سلسلة الحيازة · سجل التدقيق · الصلاحيات · توليد التقرير.</span><span class="en">Led DFIR, Security & Reporting: acquisition · hashing · chain of custody · audit log · access control · report generation.</span></p></div>
-      </div>
-      <div class="challenge"><h4><span class="ar">🧩 تحدي واجهته</span><span class="en">🧩 A Challenge I Solved</span></h4>
-        <p><span class="ar">كيف أثبت إن الدليل ما تغير من لحظة جمعه لين التقرير؟ أخذت Hash لكل دليل لحظة جمعه، وتحققت منه في كل مرحلة، وسجلت كل حركة في سلسلة الحيازة وسجل التدقيق.</span><span class="en">How to prove evidence wasn't altered from collection to report? I hashed every item at acquisition, re-verified at each stage, and logged every action in a chain of custody and audit log.</span></p></div>
-      <div class="tools"><span>Python</span><span>FastAPI</span><span>PostgreSQL</span><span>Neo4j</span><span>React</span><span>Docker</span></div>
-      <div class="p-links"><a class="soon" href="#">💻 GitHub <span class="ar">(قريباً)</span><span class="en">(soon)</span></a></div>
-    </article>
+        <div class="pbody">
+          <div class="ptag mono" data-ar="2026 · فريق من 3" data-en="2026 · Team of 3">2026 · فريق من 3</div>
+          <h3 data-ar="رَصد | Rasd" data-en="Rasd | رَصد">رَصد | Rasd</h3>
+          <p data-ar="منصة تحقيق في بيانات الاتصالات (CDR) تربط الأشخاص والأجهزة والأحداث لدعم المحقق."
+             data-en="A telecom (CDR) investigation platform linking people, devices and events to support investigators.">.</p>
+          <ul>
+            <li data-ar="دوري: DFIR والأمن والتقارير" data-en="My role: DFIR, security &amp; reporting">.</li>
+            <li data-ar="Hashing، سلسلة الحيازة، سجل التدقيق، وصلاحيات الوصول" data-en="Hashing, chain of custody, audit logging and access control">.</li>
+            <li data-ar="توليد تقرير التحقيق والتحقق من النتائج" data-en="Investigation report generation and results validation">.</li>
+          </ul>
+          <div class="chips"><span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">Neo4j</span><span class="chip">React</span><span class="chip">Docker</span></div>
+          <div class="plinks">
+            <a class="btn" href="https://github.com/sahla-hassan/rasd" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg><span data-ar="الكود على GitHub" data-en="View on GitHub">الكود على GitHub</span></a>
+          </div>
+        </div>
+      </article>
+
+    </div>
   </div>
 </section>
 
 <!-- SKILLS -->
 <section id="skills">
   <div class="wrap">
-    <h2 class="sec-title"><i>03.</i><span class="ar">المهارات التقنية</span><span class="en">Tech Stack</span></h2>
+    <h2 class="title reveal"><span class="num mono">03.</span><span data-ar="المهارات" data-en="Skills">المهارات</span></h2>
     <div class="skills">
-      <div class="skill"><h4>🛡️ <span class="ar">SIEM والكشف</span><span class="en">SIEM & Detection</span></h4><div class="pill-row"><span class="pill">Wazuh</span><span class="pill">Sysmon</span><span class="pill">Snort</span><span class="pill">MITRE ATT&CK</span></div></div>
-      <div class="skill"><h4>🔍 <span class="ar">التحقيق الجنائي</span><span class="en">Digital Forensics</span></h4><div class="pill-row"><span class="pill">Hashing</span><span class="pill">Chain of Custody</span><span class="pill">Timeline Analysis</span><span class="pill">Evidence Acquisition</span></div></div>
-      <div class="skill"><h4>🦠 <span class="ar">تحليل البرمجيات الخبيثة</span><span class="en">Malware Analysis</span></h4><div class="pill-row"><span class="pill">Joe Sandbox</span><span class="pill">VirusTotal</span><span class="pill">MalwareBazaar</span></div></div>
-      <div class="skill"><h4>🌐 <span class="ar">استخبارات التهديدات</span><span class="en">Threat Intelligence</span></h4><div class="pill-row"><span class="pill">MISP</span><span class="pill">TheHive</span><span class="pill">Cortex</span></div></div>
-      <div class="skill"><h4>💻 <span class="ar">البرمجة</span><span class="en">Programming</span></h4><div class="pill-row"><span class="pill">Python</span><span class="pill">SQL</span></div></div>
-      <div class="skill"><h4>🖥️ <span class="ar">الأنظمة</span><span class="en">Systems</span></h4><div class="pill-row"><span class="pill">Kali Linux</span><span class="pill">Ubuntu</span><span class="pill">Windows</span></div></div>
+      <div class="sk reveal"><h4>🛡️ <span data-ar="SIEM والكشف" data-en="SIEM & Detection">SIEM والكشف</span></h4><div class="chips"><span class="chip">Wazuh</span><span class="chip">Sysmon</span><span class="chip">Snort</span><span class="chip">MITRE ATT&amp;CK</span></div></div>
+      <div class="sk reveal"><h4>🔍 <span data-ar="التحقيق الجنائي الرقمي" data-en="Digital Forensics">التحقيق الجنائي الرقمي</span></h4><div class="chips"><span class="chip">Disk Imaging</span><span class="chip">Memory Forensics</span><span class="chip">Chain of Custody</span><span class="chip">Windows Logs</span><span class="chip">Wireshark</span></div></div>
+      <div class="sk reveal"><h4>🦠 <span data-ar="تحليل البرمجيات الخبيثة" data-en="Malware Analysis">تحليل البرمجيات الخبيثة</span></h4><div class="chips"><span class="chip">Joe Sandbox</span><span class="chip">VirusTotal</span></div></div>
+      <div class="sk reveal"><h4>🌐 <span data-ar="استخبارات التهديدات" data-en="Threat Intelligence">استخبارات التهديدات</span></h4><div class="chips"><span class="chip">MISP</span><span class="chip">TheHive</span><span class="chip">Cortex</span></div></div>
+      <div class="sk reveal"><h4>💻 <span data-ar="البرمجة والأنظمة" data-en="Code & Systems">البرمجة والأنظمة</span></h4><div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">Kali Linux</span><span class="chip">Ubuntu</span><span class="chip">Windows</span></div></div>
+      <div class="sk reveal"><h4>📋 <span data-ar="الحوكمة والامتثال" data-en="GRC">الحوكمة والامتثال</span></h4><div class="chips"><span class="chip">NCA ECC</span><span class="chip">CIA Triad</span></div></div>
     </div>
   </div>
 </section>
@@ -298,45 +305,88 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:28px 0 40px;f
 <!-- CERTS -->
 <section id="certs">
   <div class="wrap">
-    <h2 class="sec-title"><i>04.</i><span class="ar">الشهادات</span><span class="en">Certifications</span></h2>
+    <h2 class="title reveal"><span class="num mono">04.</span><span data-ar="الشهادات" data-en="Certifications">الشهادات</span></h2>
     <div class="certs">
-      <div class="cert"><div class="ic">🏅</div><div>
-        <h4>eCDFP</h4>
-        <small>Certified Digital Forensics Professional · INE · 2026</small>
-        <em><span class="ar">تثبت: التحقيق الجنائي الرقمي</span><span class="en">Skill: Digital Forensics</span></em>
-      </div></div>
-      <div class="cert"><div class="ic">📜</div><div>
-        <h4>GMCICJC</h4>
-        <small>Certified Junior Consultant · Global Management Consulting Institute · 2026</small>
-        <em><span class="ar">تثبت: الاستشارات</span><span class="en">Skill: Consulting</span></em>
-      </div></div>
+      <div class="cert reveal"><div class="badge">🏅</div><div><h4>eCDFP</h4><div class="org" data-ar="محترف تحقيق جنائي رقمي معتمد — INE" data-en="Certified Digital Forensics Professional — INE">محترف تحقيق جنائي رقمي معتمد — INE</div><div class="yr mono">2026</div></div></div>
+      <div class="cert reveal"><div class="badge">🎓</div><div><h4>GMCICJC</h4><div class="org" data-ar="مستشار مبتدئ معتمد" data-en="Certified Junior Consultant">مستشار مبتدئ معتمد</div><div class="yr mono">2026</div></div></div>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact">
-  <div class="wrap">
-    <h2 class="sec-title"><i>05.</i><span class="ar">تواصل معي</span><span class="en">Get In Touch</span></h2>
-    <p class="c-lead"><span class="ar">أبحث عن فرصة كمحللة SOC أو في التحقيق الجنائي الرقمي. إذا عندك فرصة أو سؤال، راسلني!</span><span class="en">I'm looking for a SOC Analyst or Digital Forensics role. Have an opportunity or a question? Reach out!</span></p>
-    <div class="contact">
-      <a class="c-item" href="mailto:hsahla788@gmail.com"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> hsahla788@gmail.com</a>
-      <a class="c-item" href="https://www.linkedin.com/in/sahla-hassan" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg> LinkedIn</a>
-      <a class="c-item" href="https://github.com/sahla-hassan" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-4 1.5-4-2-6-2.5m12 5v-3.5a3 3 0 0 0-.9-2.4c3-.3 6-1.5 6-6.5a5 5 0 0 0-1.4-3.5 4.6 4.6 0 0 0-.1-3.5s-1.1-.3-3.6 1.4a12.4 12.4 0 0 0-6.5 0C6 1.8 4.9 2.1 4.9 2.1a4.6 4.6 0 0 0-.1 3.5A5 5 0 0 0 3.4 9.1c0 5 3 6.2 6 6.5a3 3 0 0 0-.9 2.4V21.5"/></svg> GitHub</a>
-      <span class="c-item">📍 <span class="ar">مكة المكرمة</span><span class="en">Makkah, Saudi Arabia</span></span>
+  <div class="wrap contact reveal">
+    <h2 class="title"><span class="num mono">05.</span><span data-ar="تواصل معي" data-en="Get in Touch">تواصل معي</span></h2>
+    <p data-ar="أبحث عن فرصة كمحللة SOC أو محققة جنائية رقمية. إذا عندك فرصة أو سؤال، راسلني." data-en="I'm looking for a SOC Analyst or Digital Forensics role. Have an opportunity or a question? Reach out.">.</p>
+    <a href="mailto:hsahla788@gmail.com" class="btn solid" data-ar="راسلني ✉" data-en="Say hello ✉">راسلني ✉</a>
+    <div class="clinks">
+      <a href="https://linkedin.com/in/sahla-hassan" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/sahla-hassan" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:hsahla788@gmail.com">hsahla788@gmail.com</a>
+      <span style="color:var(--muted);font-size:14px" data-ar="📍 مكة المكرمة" data-en="📍 Makkah, Saudi Arabia">📍 مكة المكرمة</span>
     </div>
   </div>
 </section>
+</main>
 
-<footer>Designed & built by Sahla Hassan · 2026</footer>
+<footer><span data-ar="صُمّم وبُني بواسطة سهلة حسن · 2026" data-en="Designed &amp; built by Sahla Hassan · 2026">صُمّم وبُني بواسطة سهلة حسن · 2026</span></footer>
 
 <script>
-(function(){
-  var root=document.documentElement, btn=document.getElementById('langBtn');
-  function set(l){root.lang=l;root.dir=(l==='ar')?'rtl':'ltr';try{localStorage.setItem('lang',l)}catch(e){}}
-  try{var s=localStorage.getItem('lang');if(s==='en'||s==='ar')set(s)}catch(e){}
-  btn.addEventListener('click',function(){set(root.lang==='ar'?'en':'ar')});
-})();
+// ---------- language ----------
+const html=document.documentElement, langBtn=document.getElementById('langBtn');
+function setLang(l){
+  html.lang=l; html.dir=l==='ar'?'rtl':'ltr';
+  document.querySelectorAll('[data-ar]').forEach(el=>{el.innerHTML=el.dataset[l]});
+  langBtn.textContent=l==='ar'?'English':'العربية';
+  document.title=l==='ar'?'سهلة حسن | SOC & DFIR':'Sahla Hassan | SOC & DFIR';
+  try{localStorage.setItem('lang',l)}catch(e){}
+}
+let saved='ar'; try{saved=localStorage.getItem('lang')||'ar'}catch(e){}
+setLang(saved);
+langBtn.onclick=()=>setLang(html.lang==='ar'?'en':'ar');
+
+// ---------- mobile menu ----------
+const links=document.getElementById('links');
+document.getElementById('burger').onclick=()=>links.classList.toggle('open');
+links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
+
+// ---------- header border ----------
+addEventListener('scroll',()=>document.querySelector('header').classList.toggle('scrolled',scrollY>10));
+
+// ---------- reveal ----------
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ---------- project screenshots (auto-detect, slideshow) ----------
+document.querySelectorAll('.shots').forEach(box=>{
+  const srcs=box.dataset.imgs.split(','), ok=[];
+  let pending=srcs.length;
+  srcs.forEach((s,i)=>{const im=new Image();im.alt='';
+    im.onload=()=>{ok[i]=im;done()};im.onerror=done;im.src=s.trim()});
+  function done(){ if(--pending) return;
+    const imgs=ok.filter(Boolean);
+    if(!imgs.length){box.classList.add('empty');return}
+    imgs.forEach(im=>box.appendChild(im));
+    let k=0; imgs[0].classList.add('on');
+    if(imgs.length<2) return;
+    const nav=document.createElement('div');nav.className='dotsnav';
+    imgs.forEach((_,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>show(i);nav.appendChild(b)});
+    box.appendChild(nav);
+    function show(i){imgs[k].classList.remove('on');nav.children[k].classList.remove('on');k=i;imgs[k].classList.add('on');nav.children[k].classList.add('on')}
+    show(0); setInterval(()=>show((k+1)%imgs.length),4000);
+  }
+});
+
+// ---------- gold particles ----------
+const c=document.getElementById('dots'),x=c.getContext('2d');let P=[];
+function size(){c.width=innerWidth;c.height=innerHeight;
+  P=Array.from({length:Math.min(70,innerWidth/18)},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2.2+.6,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,a:Math.random()*.5+.15}))}
+function tick(){x.clearRect(0,0,c.width,c.height);
+  P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>c.width)p.vx*=-1;if(p.y<0||p.y>c.height)p.vy*=-1;
+    x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fillStyle=`rgba(227,194,122,${p.a})`;x.fill()});
+  requestAnimationFrame(tick)}
+size();addEventListener('resize',size);
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches) tick();
 </script>
 </body>
 </html>
